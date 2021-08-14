@@ -16,7 +16,7 @@ public class CustomUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 
         if(userName.equals("John")){//here you can make a DB call with the help of repository and do the validation
-            return new User("John", "secret", new ArrayList<>());
+            return new User("John", "secret", new ArrayList<>());//assume these are returned from DB upon success
         }else{
             throw new UsernameNotFoundException("User does not exist!");
         }
