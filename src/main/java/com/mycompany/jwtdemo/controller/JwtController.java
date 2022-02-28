@@ -2,6 +2,7 @@ package com.mycompany.jwtdemo.controller;
 
 import com.mycompany.jwtdemo.model.JwtRequest;
 import com.mycompany.jwtdemo.model.JwtResponse;
+import com.mycompany.jwtdemo.model.RoleModel;
 import com.mycompany.jwtdemo.model.UserModel;
 import com.mycompany.jwtdemo.service.CustomUserDetailService;
 import com.mycompany.jwtdemo.util.JwtUtil;
@@ -14,6 +15,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api")
@@ -30,6 +35,12 @@ public class JwtController {
 
     @PostMapping("/register")
     public ResponseEntity<UserModel> register(@RequestBody UserModel userModel){
+        RoleModel rm = new RoleModel();
+        rm.setId(111L);
+        rm.setRoleName("ROLE_USER");
+        Set<RoleModel> rmSet = new HashSet<>();
+        rmSet.add(rm);
+        userModel.setRoles(rmSet);
       UserModel userModel1 = customUserDetailService.register(userModel);
       ResponseEntity<UserModel> re = new ResponseEntity<>(userModel1, HttpStatus.CREATED);
       return re;
